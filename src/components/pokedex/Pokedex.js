@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Pokemon from '../../models/Pokemon';
+import PokedexCardComponent from '../pokedexCard/PokedexCardComponent';
 import './pokedex.css';
+
 
 class Pokedex extends Component {
     constructor(props) {
         super(props);
         this.state = { searchText: '', cards: [], showCards: [] }
+
     }
 
     componentWillMount() {
@@ -82,10 +85,29 @@ class Pokedex extends Component {
             });
     }
 
+
+    handleInputChange(e) {
+        console.log(e.target.value);
+        this.setState({searchText: e.target.value})
+        console.log(JSON.stringify(this.state.cards));
+        const filteredCards = this.state.cards.filter(pokemon => pokemon.name.startsWith(e.target.value));
+        console.log(JSON.stringify(filteredCards))
+        this.setState({ showCards: filteredCards })
+    }
+
     render() {
+        const cards =
+            this.state.showCards.map((card, i) => <PokedexCardComponent key={i} myCard={card} ></PokedexCardComponent>
+            );
+
         return (
+
             <div className="container">
-                {JSON.stringify(this.state.showCards)}
+                <div className="d-flex flex-column">
+                    <div className="row d-flex justify-content-between">
+                        {cards}
+                    </div>
+                </div>
             </div>
 
         );
