@@ -1,6 +1,15 @@
 import React, { Component } from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+    Link,
+    useParams
+  } from "react-router-dom";
 import Pokemon from '../../models/Pokemon';
 import PokedexCardComponent from '../pokedexCard/PokedexCardComponent';
+import PokemonInfoComponent from '../pokemonInfo/PokemonInfoComponent';
 import './pokedex.css';
 
 
@@ -8,6 +17,7 @@ class Pokedex extends Component {
     constructor(props) {
         super(props);
         this.state = { searchText: '', cards: [], showCards: [] }
+        this.ShowPokemon = this.ShowPokemon.bind(this);
 
     }
 
@@ -95,19 +105,45 @@ class Pokedex extends Component {
         this.setState({ showCards: filteredCards })
     }
 
+    ShowPokemon() {
+        let { id } = useParams();
+        console.log(id);
+        if (id!=='home') {
+            return(<Link to="/home"><PokemonInfoComponent myCard={this.state.showCards.find(element => element.name === id)} ></PokemonInfoComponent></Link>)
+        } else {
+            return (
+                <div>
+                </div>
+              );
+        }
+
+      }
+
     render() {
         const cards =
-            this.state.showCards.map((card, i) => <PokedexCardComponent key={i} myCard={card} ></PokedexCardComponent>
+            this.state.showCards.map((card, i) => <Link to={card.name}><PokedexCardComponent key={i} myCard={card} ></PokedexCardComponent></Link>
             );
 
         return (
 
             <div className="container">
-                <div className="d-flex flex-column">
-                    <div className="row d-flex justify-content-between">
-                        {cards}
-                    </div>
-                </div>
+                <Router>
+                <Route exact path="/">
+                    <Redirect to="/home" />
+                </Route>
+
+                        <Route path="/home">
+                            <div className="d-flex flex-column">
+                                <input className="form-control mt-4 mb-4" type="text" placeholder="Search" aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
+                                <div className="row d-flex justify-content-between">
+                                    {cards}
+                                </div>
+                            </div>
+                        </Route>
+                        <Switch>
+                            <Route path="/:id" children={<this.ShowPokemon />} />
+                        </Switch>
+                </Router>
             </div>
 
         );
