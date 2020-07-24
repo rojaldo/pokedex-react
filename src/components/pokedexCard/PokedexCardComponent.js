@@ -58,8 +58,8 @@ class PokedexCardComponent extends Component {
                         <div className="d-flex justify-content-center">
                             <img className="card-img" src={this.props.myCard.image} alt="Card cap"/>
                         </div>
-                            <div className="d-flex flex-row align-items-start ">
-                                <div className="d-inline p-2 id-box">ID / {this.props.myCard.id}</div>
+                            <div className="d-flex flex-nowrap align-items-start ">
+                                <div className="d-inline p-2 id-label">ID / {this.props.myCard.id}</div>
                             </div>
                         </div>
                         <div className="card-body d-flex flex-column">

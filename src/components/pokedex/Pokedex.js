@@ -42,7 +42,7 @@ class Pokedex extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-    }info
+    }
 
     componentWillUnmount() {
 
@@ -59,17 +59,15 @@ class Pokedex extends Component {
     // This method gets information from API of 100 first pokemons
     // Each pokemon needs 2 aditional calls to get general information and evolutions
     // TODO: implement infinite scroll to get next 100 pokemons
-    // TODO: isolate state variable to just been called once after all the informations is retrieved
+    // TODO: isolate state variable to just been called once after all the information is retrieved
     doRequest() {
         fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
-                console.log(data);
                 for (const jsonCard of data.results) {
                     let pokemonData = {};
-                    console.log('jsonCardURL: ' + jsonCard.url);
                     // Next API call to get pokemon information
                     fetch(jsonCard.url)
                         .then((response) => {
@@ -95,19 +93,17 @@ class Pokedex extends Component {
             });
     }
 
-
+    // This method filters the array that shows PokemonCardComponents, it is called each time that the text input value changes
     handleInputChange(e) {
-        console.log(e.target.value);
-        this.setState({searchText: e.target.value})
-        console.log(JSON.stringify(this.state.cards));
+        this.setState({searchText: e.target.value});
         const filteredCards = this.state.cards.filter(pokemon => pokemon.name.toLowerCase().startsWith(e.target.value.toLowerCase()));
-        console.log(JSON.stringify(filteredCards))
-        this.setState({ showCards: filteredCards })
+        this.setState({ showCards: filteredCards });
     }
 
+    // This method shows PokemonInfoComponent each time that a pokemon card component is clicked. 
+    // The PokemonInfoComponent is wrapped in a Link component linking route '/home' to go back to list when it is clicked 
     ShowPokemon() {
         let { id } = useParams();
-        console.log(id);
         if (id!=='home') {
             return(<Link to="/home"><PokemonInfoComponent myCard={this.state.showCards.find(element => element.name === id)} ></PokemonInfoComponent></Link>)
         } else {
@@ -116,36 +112,31 @@ class Pokedex extends Component {
                 </div>
               );
         }
-
-      }
+    }
 
     render() {
         const cards =
             this.state.showCards.map((card, i) => <Link to={card.name}><PokedexCardComponent key={i} myCard={card} ></PokedexCardComponent></Link>
             );
-
         return (
-
             <div className="container">
                 <Router>
                 <Route exact path="/">
                     <Redirect to="/home" />
                 </Route>
-
-                        <Route path="/home">
-                            <div className="d-flex flex-column">
-                                <input className="form-control mt-4 mb-4 shadow" type="text" placeholder="Filtra Pokemons por nombre..." aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
-                                <div className="row d-flex justify-content-between">
-                                    {cards}
-                                </div>
-                            </div>
-                        </Route>
-                        <Switch>
-                            <Route path="/:id" children={<this.ShowPokemon />} />
-                        </Switch>
+                <Route path="/home">
+                    <div className="d-flex flex-column">
+                        <input className="form-control mt-4 mb-4 shadow" type="text" placeholder="Filtra pokemons por nombre..." aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
+                        <div className="row d-flex justify-content-between">
+                            {cards}
+                        </div>
+                    </div>
+                </Route>
+                    <Switch>
+                        <Route path="/:id" children={<this.ShowPokemon />} />
+                    </Switch>
                 </Router>
             </div>
-
         );
     }
 }
