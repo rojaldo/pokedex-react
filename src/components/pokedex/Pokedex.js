@@ -100,7 +100,7 @@ class Pokedex extends Component {
         console.log(e.target.value);
         this.setState({searchText: e.target.value})
         console.log(JSON.stringify(this.state.cards));
-        const filteredCards = this.state.cards.filter(pokemon => pokemon.name.startsWith(e.target.value));
+        const filteredCards = this.state.cards.filter(pokemon => pokemon.name.toLowerCase().startsWith(e.target.value.toLowerCase()));
         console.log(JSON.stringify(filteredCards))
         this.setState({ showCards: filteredCards })
     }
