@@ -22,10 +22,10 @@ class Pokedex extends Component {
     }
 
     componentWillMount() {
-        this.doRequest()
     }
 
     componentDidMount() {
+        this.doRequest()
     }
 
     componentWillReceiveProps(nextProps) {
@@ -71,14 +71,22 @@ class Pokedex extends Component {
                     // Next API call to get pokemon information
                     fetch(jsonCard.url)
                         .then((response) => {
-                            return response.json();
+                            if (response.ok) {
+                                return response.json();
+                              } else {
+                                throw new Error('Something went wrong ...');
+                              }
                         })
                         .then((data) => {
                             pokemonData = data;
                             // Another API call to get species information
                             fetch(pokemonData.species.url)
                                 .then((response) => {
-                                    return response.json();
+                                    if (response.ok) {
+                                        return response.json();
+                                      } else {
+                                        throw new Error('Something went wrong ...');
+                                      }
                                 })
                                 .then((data) => {
                                     let speciesData = data;
