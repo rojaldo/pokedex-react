@@ -134,7 +134,7 @@ class Pokedex extends Component {
 
                         <Route path="/home">
                             <div className="d-flex flex-column">
-                                <input className="form-control mt-4 mb-4" type="text" placeholder="Search" aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
+                                <input className="form-control mt-4 mb-4 shadow" type="text" placeholder="Filtra Pokemons por nombre..." aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
                                 <div className="row d-flex justify-content-between">
                                     {cards}
                                 </div>

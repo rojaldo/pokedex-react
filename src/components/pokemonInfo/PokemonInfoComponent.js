@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import './pokemonInfo.css';
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+
 
 
 class PokemonInfoComponent extends Component {
@@ -52,30 +54,32 @@ class PokemonInfoComponent extends Component {
         }
         return (
         <div class="container h-100">
+            <ReactCSSTransitionGroup transitionName = "info"
+            transitionAppear = {true} transitionAppearTimeout = {500}>
                <div class="row align-items-center h-100">
                     <div class="col-6 mx-auto">
-                    <div className="card m-3 pokemon-info">
-                    <div className="d-flex flex-column">
-                        <div className="d-flex flex-column top-part">
-                        <div className="d-flex justify-content-center">
-                            <img className="card-img" src={this.props.myCard.image} alt="Card cap"/>
-                        </div>
-                            <div className="d-flex flex-row align-items-start id-box">
-                                <div class="d-inline p-2">ID / {this.props.myCard.id}</div>
+                        <div className="card m-3 pokemon-info shadow-lg">
+                            <div className="d-flex flex-column">
+                                <div className="d-flex flex-column top-part">
+                                    <div className="d-flex justify-content-center">
+                                        <img className="card-img" src={this.props.myCard.image} alt="Card cap"/>
+                                    </div>
+                                    <div className="d-flex flex-row align-items-start id-box">
+                                        <div class="d-inline p-2">ID / {this.props.myCard.id}</div>
+                                    </div>
+                                </div>
+                                <div className="card-body d-flex flex-column">
+                                    <h2 class="pokemon-name-label">{this.props.myCard.name}</h2>
+                                    <div className="d-flex justify-content-start">
+                                        {types}
+                                    </div>
+                                    {evolvesFrom}
+                                </div>
                             </div>
                         </div>
-                        <div className="card-body d-flex flex-column">
-                            <h2 class="pokemon-name-label">{this.props.myCard.name}</h2>
-                            <div className="d-flex justify-content-start">
-                                {types}
-                            </div>
-                            {evolvesFrom}
-                        </div>
-                    </div>
                     </div>
                 </div>
-            </div>
-
+            </ReactCSSTransitionGroup>
         </div>
             
         );

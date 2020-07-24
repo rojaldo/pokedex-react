@@ -5,7 +5,9 @@ import Pokedex from './components/pokedex/Pokedex';
 
 function App() {
   return (
-    <Pokedex></Pokedex>
+    <div className="main-container">
+      <Pokedex></Pokedex>
+    </div>
   );
 }
 

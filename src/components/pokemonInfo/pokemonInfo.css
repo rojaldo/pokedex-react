@@ -46,3 +46,12 @@ a:active {
 .pokemon-name-label {
   color:#292929
 }
+
+.info-appear {
+    opacity: 0.01;
+}
+
+.info-appear.info-appear-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
