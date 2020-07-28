@@ -11,13 +11,15 @@ import Pokemon from '../../models/Pokemon';
 import PokedexCardComponent from '../pokedexCard/PokedexCardComponent';
 import PokemonInfoComponent from '../pokemonInfo/PokemonInfoComponent';
 import './pokedex.scss';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 
 class Pokedex extends Component {
     constructor(props) {
         super(props);
-        this.state = { searchText: '', cards: [], showCards: [] }
+        this.state = { searchText: '', cards: [], showCards: [], itemsLength: 964, nextPokemons: '' }
         this.ShowPokemon = this.ShowPokemon.bind(this);
+
 
     }
 
@@ -48,6 +50,15 @@ class Pokedex extends Component {
 
     }
 
+    fetchMoreData = () => {
+        // a fake async api call like which sends
+        // 20 more records in 1.5 secs
+        console.log('Fetching: ' + this.state.nextPokemons);
+        if (this.state.nextPokemons !== null) {
+            this.doRequest(this.state.nextPokemons)
+        }
+    }
+
     // This method sorts an array based on a given key 
     sortByKey(array, key){
         return array.sort(function(a, b){
@@ -60,12 +71,13 @@ class Pokedex extends Component {
     // Each pokemon needs 2 aditional calls to get general information and evolutions
     // TODO: implement infinite scroll to get next 100 pokemons
     // TODO: isolate state variable to just been called once after all the information is retrieved
-    doRequest() {
-        fetch('https://pokeapi.co/api/v2/pokemon?limit=100')
+    doRequest(url = 'https://pokeapi.co/api/v2/pokemon?offset=0&limit=100') {
+        fetch(url)
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
+                this.setState({nextPokemons: data.next});
                 for (const jsonCard of data.results) {
                     let pokemonData = {};
                     // Next API call to get pokemon information
@@ -79,6 +91,7 @@ class Pokedex extends Component {
                         })
                         .then((data) => {
                             pokemonData = data;
+                            this.nextPokemons = pokemonData.next;
                             // Another API call to get species information
                             fetch(pokemonData.species.url)
                                 .then((response) => {
@@ -129,17 +142,24 @@ class Pokedex extends Component {
         return (
             <div className="container">
                 <Router>
-                <Route exact path="/">
-                    <Redirect to="/home" />
-                </Route>
-                <Route path="/home">
-                    <div className="d-flex flex-column">
-                        <input className="form-control mt-4 mb-4 shadow" type="text" placeholder="Filtra pokemons por nombre..." aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
-                        <div className="row d-flex justify-content-between">
-                            {cards}
+                    <Route exact path="/">
+                        <Redirect to="/home" />
+                    </Route>
+                    <Route path="/home">
+                        <div className="d-flex flex-column">
+                            <input className="form-control mt-4 mb-4 shadow" type="text" placeholder="Filtra pokemons por nombre..." aria-label="Search" onChange={(e)=>this.handleInputChange(e)} value={this.state.searchText}></input>
+                            
+                            <InfiniteScroll
+                            dataLength={this.state.itemsLength}
+                            next={this.fetchMoreData}
+                            hasMore={true}
+                            loader={<h4>Loading...</h4>}>
+                                <div className="row d-flex justify-content-between">
+                                    {cards}
+                                </div>
+                            </InfiniteScroll>
                         </div>
-                    </div>
-                </Route>
+                    </Route>
                     <Switch>
                         <Route path="/:id" children={<this.ShowPokemon />} />
                     </Switch>
