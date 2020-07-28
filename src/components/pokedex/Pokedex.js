@@ -10,7 +10,7 @@ import {
 import Pokemon from '../../models/Pokemon';
 import PokedexCardComponent from '../pokedexCard/PokedexCardComponent';
 import PokemonInfoComponent from '../pokemonInfo/PokemonInfoComponent';
-import './pokedex.css';
+import './pokedex.scss';
 
 
 class Pokedex extends Component {

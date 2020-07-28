@@ -1,47 +1,28 @@
+$card-link-color: #292929;
+
 a:link {
-    color: #292929;
+    color: $card-link-color;
     text-decoration: none;
   }
   
   /* visited link */
   a:visited {
-    color: #292929;
+    color: $card-link-color;
     text-decoration: none;
   }
   
   /* mouse over link */
   a:hover {
-    color: #292929;
+    color: $card-link-color;
     text-decoration: none;
   }
   
   /* selected link */
   a:active {
-    color: #292929;
+    color: $card-link-color;
     text-decoration: none;
   }
 
 .evo-box {
     border-left: 5px solid #512f1b
-}
-
-.pokemon-card {
-  width: 20rem; 
-  height: 28rem
-}
-
-.top-part {
-  background: #dfdfdf
-}
-
-.card-img {
-  width: 192px
-}
-
-.id-label {
-  background: #d1cdca
-}
-
-.pokemon-name-label {
-  color:#292929
 }

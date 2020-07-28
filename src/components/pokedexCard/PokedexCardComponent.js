@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './pokedexCard.css';
+import './pokedexCard.scss';
 
 
 

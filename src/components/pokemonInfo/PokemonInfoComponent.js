@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import './pokemonInfo.css';
+import './pokemonInfo.scss';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 
