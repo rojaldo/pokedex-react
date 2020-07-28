@@ -1,22 +1,42 @@
 @import '../../styles/customLink.scss';
 
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+.type-box { 
+  @include border-radius(5px); // apply the mixin
+  padding:5px;
+  margin: 10px;
+  border: 2px solid #292929;
+}
+
 .pokemon-card {
   width: 20rem; 
-  height: 28rem
-}
+  height: 30rem;
+  
+  .top-part {
+    background: #dfdfdf
+  }
+  
+  .card-img {
+    width: 192px
+  }
+  
+  .id-label {
+    background: #d1cdca
+  }
+  
+  .pokemon-name-label {
+    color:#292929
+  }
 
-.top-part {
-  background: #dfdfdf
-}
-
-.card-img {
-  width: 192px
-}
-
-.id-label {
-  background: #d1cdca
-}
-
-.pokemon-name-label {
-  color:#292929
+  .evo-box {
+    border-left: 5px solid #512f1b
+  }
+  
 }

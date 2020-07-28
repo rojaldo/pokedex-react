@@ -41,7 +41,7 @@ class PokemonInfoComponent extends Component {
     }
 
     render() {
-        const types = this.props.myCard.types.map((type, i) => <button type="button" class="btn btn-outline-secondary btn-small disabled mr-2">{type.type.name}</button>);
+        const types = this.props.myCard.types.map((type, i) => <div class="type-box">{type.type.name}</div>);
         let evolvesFrom = null;
         if (this.props.myCard.evolvesFrom !== null) {
             evolvesFrom = 

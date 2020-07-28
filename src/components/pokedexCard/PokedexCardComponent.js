@@ -40,7 +40,7 @@ class PokedexCardComponent extends Component {
     }
 
     render() {
-        const types = this.props.myCard.types.map((type, i) => <button type="button" className="btn btn-outline-secondary btn-small disabled mr-2">{type.type.name}</button>);
+        const types = this.props.myCard.types.map((type, i) => <div className="type-box">{type.type.name}</div>);
         let evolvesFrom = null;
         if (this.props.myCard.evolvesFrom !== null) {
             evolvesFrom = 
